@@ -1,7 +1,7 @@
 def frequencies(string)
   hash_of_frequencies = {}
   # Passer la string en array de mots
-  words = string.split.map {|word| word.downcase }
+  words = transform(string)
   # On itère sur le tableau : mot par mot,
   words.each do |word|
     # on met une condition : si la clé existe, on incrémente la valeur du mot de 1
@@ -15,8 +15,10 @@ def frequencies(string)
   return filter(hash_of_frequencies)
 end
 
-def read_file(path_file)
-  File.open(path_file).read.strip
+def transform(string)
+  string.split.map do |word|
+    word.downcase.gsub(/[?.,;]/, '')
+  end
 end
 
 def filter(hash_of_frequencies)
@@ -28,4 +30,8 @@ def filter(hash_of_frequencies)
   hash_of_frequencies
 end
 
-USELESS_WORDS = ["the", "and", "our", "have", "for", "with", "this"]
+USELESS_WORDS = ["have", "with", "this"]
+
+def read_file(path_file)
+  File.open(path_file).read.strip
+end
